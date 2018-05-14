@@ -1,7 +1,7 @@
 # ASP.NETCoreWebAPI
-Необхідно реалізувати ASP.NET Core Web API
-REST API:
-Cars
+Необхідно реалізувати ASP.NET Core Web API  
+REST API:  
+Cars  
 -Список всіх машин (GET)
 -Деталі по одній машині (GET)
 -Видалити машину (DELETE)
