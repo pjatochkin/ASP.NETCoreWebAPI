@@ -18,7 +18,7 @@ namespace ASP.NETCoreWebAPI.Controllers
         }
                 
         [HttpGet]
-        public JsonResult GetNumberOfBusyPlacesInParkingLot(int id)
+        public JsonResult GetNumberOfBusyPlacesInParkingLot()
         {
             return Json(ClassLibrary.Parking.GetParkingInstance().ReturnCarsCount());
         }

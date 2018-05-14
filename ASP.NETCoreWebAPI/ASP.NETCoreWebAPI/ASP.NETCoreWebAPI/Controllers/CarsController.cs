@@ -19,9 +19,9 @@ namespace ASP.NETCoreWebAPI.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetCar(int id)
+        public JsonResult GetCar(int idCar)
         {
-            return Json(ClassLibrary.Parking.GetParkingInstance().GetOneCar(id));            
+            return Json(ClassLibrary.Parking.GetParkingInstance().GetOneCar(idCar));            
         }
 
         [HttpPost]
@@ -33,9 +33,9 @@ namespace ASP.NETCoreWebAPI.Controllers
         
         
         [HttpDelete]
-        public void Delete(int id)
+        public void Delete(int idCar)
         {
-            ClassLibrary.Parking.GetParkingInstance().RemoveCar(id);
+            ClassLibrary.Parking.GetParkingInstance().RemoveCar(idCar);
         }
     }
 }

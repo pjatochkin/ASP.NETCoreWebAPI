@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ClassLibrary;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,35 +11,33 @@ namespace ASP.NETCoreWebAPI.Controllers
 {
     [Produces("application/json")]
     public class TransactionsController : Controller
-    {        
+    {
         [HttpGet]
-        public IEnumerable<string> Get()
+        public JsonResult GetTransactionLogFile()
         {
-            return new string[] { "value1", "value2" };
+            List<Transaction> log = Parking.GetParkingInstance().GetTransactionLogFile();
+            return Json(log);
         }
-                
+
         [HttpGet]
-        public string Get(int id)
+        public JsonResult GetTransactionsLastMinute()
         {
-            return "value";
+            List<Transaction> trn = Parking.GetParkingInstance().allTransaction.Where(t => t._date.AddMinutes(1) == DateTime.Now).ToList<Transaction>();
+            return Json(trn);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpGet]
+        public JsonResult GetOneCarTransactions(int idCar)
         {
+            List<Transaction> trn = Parking.GetParkingInstance().allTransaction.Where(t => t._date.AddMinutes(1) == DateTime.Now && t._idCar == idCar).ToList<Transaction>();
+            return Json(trn);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public JsonResult AddCarBalance(int idCar, decimal sum)
         {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            Parking.GetParkingInstance().AddCarMoney(idCar, sum);
+            return Json(Parking.GetParkingInstance().ReturnCarBalance(idCar));
         }
     }
 }

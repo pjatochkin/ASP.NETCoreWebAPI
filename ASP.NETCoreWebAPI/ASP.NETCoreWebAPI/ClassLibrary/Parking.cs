@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 using System.Linq;
+//using Newtonsoft.Json;
 
 namespace ClassLibrary
 {
@@ -21,7 +22,7 @@ namespace ClassLibrary
         private Timer timerSum;
         private Timer timerTrans;
         List<Car> allCars = new List<Car>();
-        List<Transaction> allTransaction = new List<Transaction>();
+        public List<Transaction> allTransaction = new List<Transaction>();
 
         //singleton pattern
         private static Parking ParkingInstance = new Parking();
@@ -135,6 +136,16 @@ namespace ClassLibrary
         {
             Car car = allCars.FirstOrDefault<Car>(c => c._id == id);
             return car;
+        }
+
+        public List<Transaction> GetTransactionLogFile()
+        {
+            List<Transaction> allTransaction = null;
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\Transaction.log"))
+            {
+                allTransaction = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Transaction>>(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\Transaction.log"));
+            }
+            return allTransaction;
         }
     }
 }
