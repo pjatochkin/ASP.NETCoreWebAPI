@@ -8,39 +8,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NETCoreWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class ParkingController : Controller
     {
-        // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public JsonResult GetNumberOfFreeParkingSpaces()
         {
-            return new string[] { "value1", "value2" };
+            return Json(ClassLibrary.Settings.GetSettingsInstance()._parkingSpace - ClassLibrary.Parking.GetParkingInstance().ReturnCarsCount());
+        }
+                
+        [HttpGet]
+        public JsonResult GetNumberOfBusyPlacesInParkingLot(int id)
+        {
+            return Json(ClassLibrary.Parking.GetParkingInstance().ReturnCarsCount());
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public JsonResult GetTotalRevenueParking()
         {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+            return Json(ClassLibrary.Parking.GetParkingInstance()._allMoney);
+        }        
     }
 }
